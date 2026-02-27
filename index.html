@@ -13,20 +13,19 @@
     <meta name="theme-color" content="#d63384">
     
     <script>
-        // Service Worker robusto para forçar o ícone de instalação no Chrome PC e Android
+        // ESTA FUNÇÃO É O QUE ATIVA O BOTÃO DE INSTALAR NO ANDROID
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                const swCode = `
-                    self.addEventListener('install', e => self.skipWaiting());
-                    self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
-                    self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => {})));
-                `;
+                const swCode = "self.addEventListener('fetch', function(event) { event.respondWith(fetch(event.request)); });";
                 const blob = new Blob([swCode], { type: 'text/javascript' });
                 const url = URL.createObjectURL(blob);
-                navigator.serviceWorker.register(url).then(() => console.log("App Pronto para Instalação!"));
+                navigator.serviceWorker.register(url)
+                    .then(reg => console.log('App pronto para instalar!'))
+                    .catch(err => console.log('Erro no registro:', err));
             });
         }
     </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
