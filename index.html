@@ -13,13 +13,20 @@
     <meta name="theme-color" content="#d63384">
     
     <script>
-        // Registra o Service Worker para habilitar a instalação
+        // Service Worker robusto para forçar o ícone de instalação no Chrome PC e Android
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('data:text/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIGV2ZW50ID0+IHsgfSk7')
-            .catch(err => console.log("Erro no SW:", err));
+            window.addEventListener('load', () => {
+                const swCode = `
+                    self.addEventListener('install', e => self.skipWaiting());
+                    self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
+                    self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => {})));
+                `;
+                const blob = new Blob([swCode], { type: 'text/javascript' });
+                const url = URL.createObjectURL(blob);
+                navigator.serviceWorker.register(url).then(() => console.log("App Pronto para Instalação!"));
+            });
         }
     </script>
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -47,7 +54,7 @@
         
         .container { width: 100%; max-width: 1200px; margin: auto; padding: 20px; padding-top: 70px; }
 
-        /* --- SIDEBAR OTIMIZADA --- */
+        /* --- SIDEBAR --- */
         #sidebar {
             position: fixed; left: -100%; top: 0;
             width: 85%; max-width: var(--sidebar-width); height: 100%;
@@ -66,7 +73,7 @@
             font-size: 1.4rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        /* --- MODAIS ESTILO BOTTOM-SHEET PARA MOBILE --- */
+        /* --- MODAIS --- */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: white; z-index: 4000; display: none; padding: 20px; overflow-y: auto;
@@ -82,14 +89,12 @@
 
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; position: sticky; top: 0; background: white; z-index: 10; padding: 10px 0; }
         
-        /* Calendário Compacto */
         .calendar-grid-custom { display: grid; grid-template-columns: 30px repeat(7, 1fr); gap: 4px; }
         .cal-day { padding: 12px 5px; border: 1px solid #f0f0f0; text-align: center; border-radius: 10px; cursor: pointer; font-size: 12px; font-weight: 500; position: relative; }
         .cal-day.active { background: var(--ui-accent) !important; color: white !important; border-color: var(--ui-accent) !important; }
         .cal-day.has-task { border: 2px solid var(--ui-green); }
         .btn-week-sel { background: #f8f9fa; border: none; font-size: 9px; color: var(--ui-dim); }
 
-        /* Estilos Novos da Agenda */
         .slot-filled { background: #f0fff4 !important; border: 1.5px solid var(--ui-green) !important; }
         .slot-hidden { display: none !important; }
 

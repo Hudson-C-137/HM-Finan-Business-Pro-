@@ -1,0 +1,16 @@
+{
+  "name": "Gestão Business Pro",
+  "short_name": "BusinessPro",
+  "description": "Sistema de Gestão Master",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#d63384",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/552/552791.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
