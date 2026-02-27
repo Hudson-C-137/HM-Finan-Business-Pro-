@@ -4,16 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Gestão Salão Master Pro - Mobile Optimized</title>
-    
+
+    <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="HM Finan">
+    <meta name="apple-mobile-web-app-title" content="Business Pro">
     <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/552/552791.png">
-    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#d63384">
+    
     <script>
+        // Registra o Service Worker para habilitar a instalação
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('data:text/javascript;base64,c2VsZi5hZGRFdmVudExpc3RlbmVyKCdmZXRjaCcsIGV2ZW50ID0+IHsgfSk7')
-            .catch(err => console.log("Erro ao registrar service worker", err));
+            .catch(err => console.log("Erro no SW:", err));
         }
     </script>
 
@@ -99,7 +102,6 @@
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
         .card { background: var(--ui-card); border-radius: 24px; padding: 20px; border: 1px solid rgba(0,0,0,0.05); }
         
-        /* Inputs maiores para dedos */
         input { font-size: 16px !important; padding: 14px !important; border-radius: 12px !important; border: 1px solid #eee !important; width: 100%; }
         .add-btn { min-height: 48px; width: 100%; border-radius: 14px; font-size: 15px; cursor: pointer; border: none; display: flex; align-items: center; justify-content: center; font-weight: 600; }
 
